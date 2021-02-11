@@ -12,7 +12,7 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public Project saveOrUpdaProject(Project project) {
+    public Project saveOrUpdateProject(Project project) {
         try{
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
             return projectRepository.save(project);
