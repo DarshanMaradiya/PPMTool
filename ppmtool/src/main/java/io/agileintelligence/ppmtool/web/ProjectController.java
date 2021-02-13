@@ -1,12 +1,12 @@
 package io.agileintelligence.ppmtool.web;
 
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +21,7 @@ import io.agileintelligence.ppmtool.services.ProjectService;
 
 @RestController
 @RequestMapping("/api/project")
+@CrossOrigin
 public class ProjectController {
     @Autowired
     private ProjectService projectService;
@@ -30,9 +31,10 @@ public class ProjectController {
 
     @PostMapping("")
     public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result) {
-        
+
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-        if(errorMap != null) return errorMap;
+        if (errorMap != null)
+            return errorMap;
 
         Project project1 = projectService.saveOrUpdateProject(project);
         return new ResponseEntity<Project>(project1, HttpStatus.CREATED);
@@ -54,7 +56,8 @@ public class ProjectController {
     public ResponseEntity<String> deleteProject(@PathVariable String projectId) {
         projectService.deleteProjectByIdentifier(projectId);
 
-        return new ResponseEntity<String>("Project with id '" + projectId.toUpperCase() + "' was deleted", HttpStatus.OK);
+        return new ResponseEntity<String>("Project with id '" + projectId.toUpperCase() + "' was deleted",
+                HttpStatus.OK);
     }
 
 }
