@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { createProject } from '../../actions/projectActions'
 import PropTypes from "prop-types"
 import store from '../../store'
+import { deepCompare } from '../../UDFs'
 
 class AddProject extends Component {
     constructor() {
@@ -13,7 +14,12 @@ class AddProject extends Component {
             projectIdentifier: "",
             description: "",
             start_date: "",
-            end_date: ""
+            end_date: "",
+            errors: {
+                projectName: "",
+                projectIdentifier: "",
+                description: "",
+            }
         }
     }
 
@@ -22,6 +28,24 @@ class AddProject extends Component {
             [e.target.name]: e.target.value
         })
     }
+
+    // Lifecycle hooks
+    // Following is deprecated
+    // UNSAFE_componentWillReceiveProps(nextProps) {
+    //     if(nextProps.errors) {
+    //         this.setState({
+    //             errors: nextProps.errors
+    //         })
+    //     }
+    // }
+    // 
+    // Following is alternative
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (!deepCompare(prevState.errors, nextProps.errors)) {
+          return ({ errors: nextProps.errors }) // <- this is setState equivalent
+        }
+        return null
+      }
 
     onSubmit = (e) => {
         e.preventDefault()
@@ -46,6 +70,7 @@ class AddProject extends Component {
             //bind on constructor
             //check state change in the react extension
         }
+        const { errors } = this.state
         return (
             <div className="register">
                 <div className="container">
@@ -63,6 +88,7 @@ class AddProject extends Component {
                                         value={ this.state.projectName }
                                         onChange={ this.onChange }
                                     />
+                                    <p>{ errors.projectName }</p>
                                 </div>
                                 <div className="form-group">
                                     <input 
@@ -73,6 +99,7 @@ class AddProject extends Component {
                                         value={ this.state.projectIdentifier }
                                         onChange={ this.onChange }
                                     />
+                                    <p>{ errors.projectIdentifier }</p>
                                 </div>
                                 
                                 <div className="form-group">
@@ -83,6 +110,7 @@ class AddProject extends Component {
                                         value={ this.state.description }
                                         onChange={ this.onChange }
                                     ></textarea>
+                                    <p>{ errors.description }</p>
                                 </div>
                                 <h6>Start Date</h6>
                                 <div className="form-group">
@@ -93,6 +121,7 @@ class AddProject extends Component {
                                         value={ this.state.start_date }
                                         onChange={ this.onChange }
                                     />
+                                    <p>{ errors.start_date }</p>
                                 </div>
                                 <h6>Estimated End Date</h6>
                                 <div className="form-group">
@@ -103,6 +132,7 @@ class AddProject extends Component {
                                         value={ this.state.end_date }
                                         onChange={ this.onChange }
                                     />
+                                    <p>{ errors.end_date }</p>
                                 </div>
 
                                 <input 
@@ -118,17 +148,18 @@ class AddProject extends Component {
     }
 }
 
-// this is like a constraint, we are telling react that createProject func is required proptype
-// to work properly  
+// this is like a constraint, we are telling react that createProject func is required of given proptype
+// to work properly
 AddProject.propTypes = {
-    createProject: PropTypes.func.isRequired
+    createProject: PropTypes.func.isRequired,
+    errors: PropTypes.object
 }
 
-const mapStoreToProps = state => {
-    return {
-        errors: store.errors
+const mapStateToProps = state => ({
+    errors: {
+        ...state.errors
     }
-}
+})
 
 // createProject action is passed
-export default connect(mapStoreToProps, { createProject })(AddProject)
+export default connect(mapStateToProps, { createProject })(AddProject)
