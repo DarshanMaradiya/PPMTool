@@ -13,6 +13,11 @@ export const createProject = (project, history) => async dispatch => {
         const response = await axios.post
         // route for posting the valid project object
         ('http://localhost:8080/api/project', project)
+        // Jugaad: Clearing all errors
+        dispatch({
+            type: GET_ERRORS,
+            payload: {} // by passing empty object
+        })
         // redirecting to the dashboard
         history.push("/dashboard")
     } catch (err) {
@@ -33,9 +38,28 @@ export const getProjects = () => async dispatch => {
 }
 
 export const getProject = (id, history) => async dispatch => {
-    const res = await axios.get(`http://localhost:8080/api/project/${id}`)
-    dispatch({
-        type: GET_PROJECT,
-        payload: res.data
-    })
+    try{
+        const res = await axios.get(`http://localhost:8080/api/project/${id}`)
+        dispatch({
+            type: GET_PROJECT,
+            payload: res.data
+        })
+    } catch (error) {
+        history.push("/dashboard")
+    }
 }
+
+// export const getProject = (id, history, projects) => async dispatch => {
+//     const project = projects.find(project => {
+//         return project.projectIdentifier === id
+//     })
+
+//     if(project) {
+//         dispatch({
+//             type: GET_PROJECT,
+//             payload: project
+//         })
+//     } else {
+//         history.push("/dashboard")
+//     }    
+// }

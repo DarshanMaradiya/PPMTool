@@ -10,7 +10,8 @@ const projectReducer = (state = initialState, action) => {
         case GET_PROJECTS:
             return {
                 ...state,
-                projects: action.payload 
+                projects: action.payload,
+                project: {}
             }
         case GET_PROJECT:
             return {
