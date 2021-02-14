@@ -1,10 +1,9 @@
 const { default: axios } = require("axios")
-const { GET_ERRORS } = require("./types")
+const { GET_ERRORS, GET_PROJECTS } = require("./types")
 
-// it is taking project object and history
+// It is taking project object and history
 // history allows us to redirect once we submit the form
 // since we use route to render the UI comp
-
 // Async dispatch is passed cause we want to dispatch
 // Async will return promise and we use await to wait for its result
 export const createProject = (project, history) => async dispatch => {
@@ -23,4 +22,12 @@ export const createProject = (project, history) => async dispatch => {
             payload: err.response.data
         })
     }
+}
+
+export const getProjects = () => async dispatch => {
+    const res = await axios.get('http://localhost:8080/api/project/all')
+    dispatch({
+        type: GET_PROJECTS,
+        payload: res.data
+    })
 }
