@@ -178,7 +178,6 @@ const mapStateToProps = (state) => ({
         ...state.project.project
     },
     errors: state.errors
-
 })
 
 export default connect(mapStateToProps, { getProject, createProject })(UpdateProject)

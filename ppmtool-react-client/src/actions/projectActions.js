@@ -1,5 +1,5 @@
 const { default: axios } = require("axios")
-const { GET_ERRORS, GET_PROJECTS, GET_PROJECT } = require("./types")
+const { GET_ERRORS, GET_PROJECTS, GET_PROJECT, DELETE_PROJECT } = require("./types")
 
 // It is taking project object and history
 // history allows us to redirect once we submit the form
@@ -12,7 +12,7 @@ export const createProject = (project, history) => async dispatch => {
         // use of await
         const response = await axios.post
         // route for posting the valid project object
-        ('http://localhost:8080/api/project', project)
+        ('/api/project', project)
         // Jugaad: Clearing all errors
         dispatch({
             type: GET_ERRORS,
@@ -30,7 +30,8 @@ export const createProject = (project, history) => async dispatch => {
 }
 
 export const getProjects = () => async dispatch => {
-    const res = await axios.get('http://localhost:8080/api/project/all')
+    // we have set a proxy in package.json
+    const res = await axios.get('/api/project/all')
     dispatch({
         type: GET_PROJECTS,
         payload: res.data
@@ -39,7 +40,8 @@ export const getProjects = () => async dispatch => {
 
 export const getProject = (id, history) => async dispatch => {
     try{
-        const res = await axios.get(`http://localhost:8080/api/project/${id}`)
+        // we have set a proxy in package.json
+        const res = await axios.get(`/api/project/${id}`)
         dispatch({
             type: GET_PROJECT,
             payload: res.data
@@ -63,3 +65,19 @@ export const getProject = (id, history) => async dispatch => {
 //         history.push("/dashboard")
 //     }    
 // }
+
+export const deleteProject = (id) => async dispatch => {
+    if(
+        window.confirm(
+            "Are you sure? This will delete the project and all the data related to it"
+        )
+    ) {
+        // we have set a proxy in package.json
+        const res = await axios.delete(`/api/project/${id}`)
+        dispatch({
+            type: DELETE_PROJECT,
+            payload: id
+        })
+    }
+    
+}
