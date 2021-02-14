@@ -1,5 +1,5 @@
 const { default: axios } = require("axios")
-const { GET_ERRORS, GET_PROJECTS } = require("./types")
+const { GET_ERRORS, GET_PROJECTS, GET_PROJECT } = require("./types")
 
 // It is taking project object and history
 // history allows us to redirect once we submit the form
@@ -28,6 +28,14 @@ export const getProjects = () => async dispatch => {
     const res = await axios.get('http://localhost:8080/api/project/all')
     dispatch({
         type: GET_PROJECTS,
+        payload: res.data
+    })
+}
+
+export const getProject = (id, history) => async dispatch => {
+    const res = await axios.get(`http://localhost:8080/api/project/${id}`)
+    dispatch({
+        type: GET_PROJECT,
         payload: res.data
     })
 }
