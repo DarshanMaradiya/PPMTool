@@ -2,11 +2,14 @@ package io.agileintelligence.ppmtool.domain;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotBlank;
@@ -38,6 +41,17 @@ public class Project {
     private Date created_At;
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updated_At;
+
+    // Eager => when we load a project object
+    // then the backlog information is readily available
+    // CascadeType.ALL => Project is owning side, project is deleted
+    // then this backlog will be deleted
+    // mappedBy = "project" => In backlog class "project" is the attributename to be
+    // mapped
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+    // something will be there in child side of relationship
+    // to avoid some recursive problem in relationship
+    private Backlog backlog;
 
     @PrePersist
     protected void onCreate() {
@@ -114,6 +128,14 @@ public class Project {
 
     public void setUpdated_At(Date updated_At) {
         this.updated_At = updated_At;
+    }
+
+    public Backlog getBacklog() {
+        return backlog;
+    }
+
+    public void setBacklog(Backlog backlog) {
+        this.backlog = backlog;
     }
 
 }
