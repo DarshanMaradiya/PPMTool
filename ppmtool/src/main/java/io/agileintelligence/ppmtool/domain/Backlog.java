@@ -30,7 +30,11 @@ public class Backlog {
     private Project project;
 
     // OneToMany projectTasks
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "backlog")
+    // CascadeType.REFRESH => we can delete a task beongs to the backlog,
+    // it will refresh the backlog
+    // orphanremoval = true => when child entity is not referenced,
+    // then it removes the child entity also
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "backlog", orphanRemoval = true)
     private List<ProjectTask> projectTasks = new ArrayList<>();
 
     public Backlog() {
