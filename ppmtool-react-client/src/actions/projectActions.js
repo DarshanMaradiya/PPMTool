@@ -13,7 +13,7 @@ export const createProject = (project, history) => async dispatch => {
         const response = await axios.post
         // route for posting the valid project object
         ('/api/project', project)
-        // Jugaad: Clearing all errors
+        // Clearing all errors
         dispatch({
             type: GET_ERRORS,
             payload: {} // by passing empty object
