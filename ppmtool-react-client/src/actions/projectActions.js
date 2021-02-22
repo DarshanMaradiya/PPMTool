@@ -1,5 +1,5 @@
 const { default: axios } = require("axios")
-const { GET_ERRORS, GET_PROJECTS, GET_PROJECT, DELETE_PROJECT } = require("./types")
+const { GET_ERRORS, GET_PROJECTS, GET_PROJECT, DELETE_PROJECT, CLEAR_ERRORS } = require("./types")
 
 // It is taking project object and history
 // history allows us to redirect once we submit the form
@@ -15,7 +15,7 @@ export const createProject = (project, history) => async dispatch => {
         ('/api/project', project)
         // Clearing all errors
         dispatch({
-            type: GET_ERRORS,
+            type: CLEAR_ERRORS,
             payload: {} // by passing empty object
         })
         // redirecting to the dashboard

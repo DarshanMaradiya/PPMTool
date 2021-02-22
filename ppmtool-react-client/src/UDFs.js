@@ -1,3 +1,5 @@
+import Backlog from "./components/ProjectBoard/Backlog";
+
 export const deepCompare = (obj1, obj2) => {
     var i, l, leftChain, rightChain;
   
@@ -112,3 +114,45 @@ export const deepCompare = (obj1, obj2) => {
   
     return true;
   }
+
+  export const boardAlgorithm = (errors, project_tasks) => {
+    let BoardContent, project_found
+
+    if(errors.projectNotFound) {
+        BoardContent = (
+            <div className="alert alert-danger text-center" role="alert">
+                { errors.projectNotFound }
+            </div>
+        )
+        project_found = false
+    } else {
+        if(project_tasks.length < 1) {
+            BoardContent = (
+                <div className="alert alert-info text-center" role="alert">
+                    No Project Tasks on this board
+                </div>
+            )
+        } else {
+            BoardContent = (<Backlog project_tasks_prop={ project_tasks }/>)
+        }
+        project_found = true
+    }
+    return [BoardContent, project_found]
+    // if(project_tasks.length < 1) {
+    //     if(errors.projectNotFound) {
+    //         return [(
+    //             <div className="alert alert-danger text-center" role="alert">
+    //                 { errors.projectNotFound }
+    //             </div>
+    //         ), false]
+    //     } else {
+    //         return [(
+    //             <div className="alert alert-info text-center" role="alert">
+    //                 No Project Tasks on this board
+    //             </div>
+    //         ), true]
+    //     } 
+    // } else {
+    //     return [(<Backlog project_tasks_prop={ project_tasks }/>), true]
+    // }
+}
