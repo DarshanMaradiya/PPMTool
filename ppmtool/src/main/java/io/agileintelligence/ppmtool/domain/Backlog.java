@@ -1,7 +1,9 @@
 package io.agileintelligence.ppmtool.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -35,7 +37,7 @@ public class Backlog {
     // orphanremoval = true => when child entity is not referenced,
     // then it removes the child entity also
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "backlog", orphanRemoval = true)
-    private List<ProjectTask> projectTasks = new ArrayList<>();
+    private Set<ProjectTask> projectTasks = new HashSet<>();
 
     public Backlog() {
     }
@@ -72,11 +74,11 @@ public class Backlog {
         this.project = project;
     }
 
-    public List<ProjectTask> getProjectTasks() {
+    public Set<ProjectTask> getProjectTasks() {
         return projectTasks;
     }
 
-    public void setProjectTasks(List<ProjectTask> projectTasks) {
+    public void setProjectTasks(Set<ProjectTask> projectTasks) {
         this.projectTasks = projectTasks;
     }
 

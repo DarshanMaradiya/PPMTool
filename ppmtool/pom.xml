@@ -30,6 +30,7 @@
 			<version>0.9.1</version>
 		</dependency>
 
+		<!-- Library to convert strings to json -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
