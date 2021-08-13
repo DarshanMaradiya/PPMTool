@@ -125,6 +125,13 @@ export const deepCompare = (obj1, obj2) => {
             </div>
         )
         project_found = false
+    } else if(errors.projectIdentifier) {
+        BoardContent = (
+            <div className="alert alert-danger text-center" role="alert">
+                { errors.projectIdentifier }
+            </div>
+        )
+        project_found = false
     } else {
         if(project_tasks.length < 1) {
             BoardContent = (

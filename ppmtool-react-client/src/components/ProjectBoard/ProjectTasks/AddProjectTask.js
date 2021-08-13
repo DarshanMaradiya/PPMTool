@@ -28,6 +28,7 @@ class AddProjectTask extends Component {
                 errors: nextProps.errors
             }
         }
+        return null
     }
 
     onChange = (e) => {

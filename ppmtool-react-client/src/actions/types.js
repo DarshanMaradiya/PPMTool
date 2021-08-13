@@ -9,3 +9,8 @@ export const DELETE_PROJECT = 'DELETE_PROJECT'
 export const GET_BACKLOG = 'GET_BACKLOG'
 export const GET_PROJECT_TASK = 'GET_PROJECT_TASK'
 export const DELETE_PROJECT_TASK = 'DELETE_PROJECT_TASK'
+
+// types for user management
+
+export const SET_CURRENT_USER = 'SET_CURRENT_USER'
+export const CLEAR_CURRENT_USER = 'CLEAR_CURRENT_USER'

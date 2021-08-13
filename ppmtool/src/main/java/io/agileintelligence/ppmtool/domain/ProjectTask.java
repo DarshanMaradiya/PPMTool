@@ -42,17 +42,20 @@ public class ProjectTask {
     @Column(updatable = false)
     private String projectIdentifier;
 
-    private Date create_At;
-    private Date update_At;
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    @Column(updatable = false)
+    private Date created_At;
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    private Date updated_At;
 
     @PrePersist
     protected void onCreate() {
-        this.create_At = new Date();
+        this.created_At = new Date();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.update_At = new Date();
+        this.updated_At = new Date();
     }
 
     public ProjectTask() {
@@ -122,28 +125,28 @@ public class ProjectTask {
         this.projectIdentifier = projectIdentifier;
     }
 
-    public Date getCreate_At() {
-        return create_At;
+    public Date getCreated_At() {
+        return created_At;
     }
 
-    public void setCreate_At(Date create_At) {
-        this.create_At = create_At;
+    public void setCreated_At(Date created_At) {
+        this.created_At = created_At;
     }
 
     public Date getUpdate_At() {
-        return update_At;
+        return updated_At;
     }
 
-    public void setUpdate_At(Date update_At) {
-        this.update_At = update_At;
+    public void setUpdated_At(Date updated_At) {
+        this.updated_At = updated_At;
     }
 
     @Override
     public String toString() {
-        return "ProjectTask [acceptanceCriteria=" + acceptanceCriteria + ", create_At=" + create_At + ", dueDate="
+        return "ProjectTask [acceptanceCriteria=" + acceptanceCriteria + ", created_At=" + created_At + ", dueDate="
                 + dueDate + ", id=" + id + ", priority=" + priority + ", projectIdentifier=" + projectIdentifier
                 + ", projectSequence=" + projectSequence + ", status=" + status + ", summary=" + summary
-                + ", update_At=" + update_At + "]";
+                + ", updated_At=" + updated_At + "]";
     }
 
     public Backlog getBacklog() {
